@@ -63,8 +63,8 @@ const ProgressDashboard = () => {
           currentWeight: 2.1,
           targetWeight: 0.5,
           title: "Thyroid Progress",
-          heroImage: "https://drchandrashreekulkarni.com/wp-content/uploads/2022/01/IMG_6298.jpg",
-          heroAlt: "Thyroid Care",
+          heroImage: "https://drchandrashreekulkarni.com/wp-content/uploads/2022/01/search-disease-pathology-thyroid-gland.png",
+          heroAlt: "Thyroid gland pathology",
           logButton: "Log Thyroid Update",
           compliance: [
             { label: "Medication", value: 92, emoji: "💊", color: "text-primary" },
@@ -191,14 +191,22 @@ const ProgressDashboard = () => {
             <h3 className="font-bold text-foreground text-sm">{activeSpecialty === 'obesity' ? 'Milestones' : 'Milestones'}</h3>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            {[
+            {activeSpecialty === 'obesity' ? [
               { label: "First Week", icon: "🏅", unlocked: true },
               { label: "5 Day Streak", icon: "🔥", unlocked: true },
-              { label: "1 kg Lost", icon: "⚡", unlocked: false },
+              { label: "10 kg Total Loss", icon: "⚡", unlocked: true },
+            ] : activeSpecialty === 'diabetes' ? [
+              { label: "First Week", icon: "🏅", unlocked: true },
+              { label: "5 Day Streak", icon: "🔥", unlocked: true },
+              { label: "Glucose Controlled", icon: "💉", unlocked: true },
+            ] : [
+              { label: "First Week", icon: "🏅", unlocked: true },
+              { label: "5 Day Streak", icon: "🔥", unlocked: true },
+              { label: "TSH Optimized", icon: "🎯", unlocked: true },
             ].map((m) => (
               <div key={m.label} className={`flex-1 text-center p-3 rounded-xl ${m.unlocked ? "bg-primary/10 border border-primary/20" : "bg-muted"}`}>
-                <span className="text-2xl">{m.icon}</span>
-                <p className={`text-[10px] mt-1 font-bold ${m.unlocked ? "text-foreground" : "text-muted-foreground"}`}>{m.label}</p>
+                <span className="text-2xl mb-1">{m.icon}</span>
+                <p className="text-sm font-bold text-foreground">{m.label}</p>
               </div>
             ))}
           </div>

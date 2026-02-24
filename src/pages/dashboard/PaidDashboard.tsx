@@ -79,7 +79,7 @@ const PaidDashboard = () => {
   const drawerItems = [
     { icon: GraduationCap, label: "Obesity Course", path: "/course", emoji: "📚" },
     { icon: Calendar, label: "My Program", path: "/my-program", emoji: "📋" },
-    { icon: Scale, label: "Weight Tracking", path: "/progress", emoji: "⚖️" },
+    { icon: Scale, label: activeSpecialty === 'obesity' ? "Weight Tracking" : activeSpecialty === 'diabetes' ? "Glucose Tracking" : "Thyroid Tracking", path: "/progress", emoji: "⚖️" },
     { icon: CreditCard, label: "Payment & Invoices", path: "/payments", emoji: "💳" },
     { icon: BookOpen, label: "Knowledge Base", path: "/knowledge", emoji: "📖" },
   ];
@@ -143,31 +143,92 @@ const PaidDashboard = () => {
           <div className="flex items-center gap-3">
             <div className="flex-1">
               <p className="text-lg mb-2">💡</p>
-              <p className="text-sm text-foreground italic leading-relaxed font-medium">"Health is not just about what you're eating. It's also about what you're thinking and saying."</p>
-              <p className="text-xs text-muted-foreground mt-2 font-semibold">— {activeSpecialty === 'thyroid' ? 'Dr. Chandrashree Kulkarni' : 'Dr. Bhagyesh Kulkarni'}</p>
+              <p className="text-sm text-foreground italic leading-relaxed font-medium">
+                {activeSpecialty === 'obesity' ? '"Weight loss is not just about diet, it\'s about creating a lifestyle that supports your goals."' : 
+                 activeSpecialty === 'diabetes' ? '"Managing diabetes is a journey of small, consistent steps toward better health."' : 
+                 '"Thyroid health requires balance, patience, and consistent care."'}
+              </p>
+              <p className="text-xs text-muted-foreground mt-2 font-semibold">
+                — {activeSpecialty === 'obesity' ? 'Dr. Gayatri Kulkarni' : 
+                   activeSpecialty === 'diabetes' ? 'Dr. Bhagyesh Kulkarni' : 
+                   'Dr. Chandrashree Kulkarni'}
+              </p>
             </div>
             <img 
-              src={activeSpecialty === 'thyroid' ? `${throidDr}` : "/doctor-image.webp"} 
-              alt={activeSpecialty === 'thyroid' ? "Dr. Chandrashree Kulkarni" : "Dr. Bhagyesh Kulkarni"} 
+              src={activeSpecialty === 'thyroid' ? `${throidDr}` : activeSpecialty === 'obesity' ? "https://drbhagyeshkulkarni.com/wp-content/uploads/2026/01/Gayatri-Kulkarni.webp" : "/doctor-image.webp"} 
+              alt={activeSpecialty === 'thyroid' ? "Dr. Chandrashree Kulkarni" : activeSpecialty === 'obesity' ? "Dr. Bhagyesh Kulkarni" : "Dr. Bhagyesh Kulkarni"} 
               className="w-16 h-16 rounded-full object-cover shadow-lg"
             />
           </div>
         </div>
 
-        {/* Progress Summary */}
-        <div className="card-glossy rounded-2xl p-4 mb-4">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-lg">📊</span>
-            <h3 className="font-bold text-foreground text-sm">Progress Summary</h3>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="text-center">
-              <p className="text-xs text-muted-foreground font-semibold">Current {activeSpecialty === 'obesity' ? 'Weight' : activeSpecialty === 'diabetes' ? 'Glucose' : 'TSH'}</p>
-              <p className="text-xl font-extrabold text-primary">{activeSpecialty === 'obesity' ? '77.5 kg' : activeSpecialty === 'diabetes' ? '120 mg/dL' : '2.1 mIU/L'}</p>
+        {/* Progress Summary Card with Image */}
+        <div className="rounded-2xl shadow-card mb-4 overflow-hidden bg-card">
+          <img 
+            src={activeSpecialty === 'obesity' ? weightTrackingImg : activeSpecialty === 'diabetes' ? healthHero : "https://drchandrashreekulkarni.com/wp-content/uploads/2022/01/search-disease-pathology-thyroid-gland.png"}
+            alt={activeSpecialty === 'obesity' ? 'Weight tracking' : activeSpecialty === 'diabetes' ? 'Diabetes management' : 'Thyroid gland pathology'}
+            className="w-full h-32 object-cover"
+            onError={(e) => {
+              e.currentTarget.src = weightTrackingImg; // Fallback to default image
+            }}
+          />
+          <div className="p-4">
+            {/* Current and Target Row */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground font-semibold">Current {activeSpecialty === 'obesity' ? 'Weight' : activeSpecialty === 'diabetes' ? 'Glucose' : 'TSH'}</p>
+                <p className="text-2xl font-extrabold text-primary">{activeSpecialty === 'obesity' ? '77.5 kg' : activeSpecialty === 'diabetes' ? '120 mg/dL' : '2.1 mIU/L'}</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground font-semibold">Target {activeSpecialty === 'obesity' ? 'Weight' : activeSpecialty === 'diabetes' ? 'Glucose' : 'TSH'}</p>
+                <p className="text-2xl font-extrabold text-primary">{activeSpecialty === 'obesity' ? '72 kg' : activeSpecialty === 'diabetes' ? '110 mg/dL' : '0.5 mIU/L'}</p>
+              </div>
             </div>
-            <div className="text-center">
-              <p className="text-xs text-muted-foreground font-semibold">Target {activeSpecialty === 'obesity' ? 'Weight' : activeSpecialty === 'diabetes' ? 'Glucose' : 'TSH'}</p>
-              <p className="text-xl font-extrabold text-primary">{activeSpecialty === 'obesity' ? '72 kg' : activeSpecialty === 'diabetes' ? '110 mg/dL' : '0.5 mIU/L'}</p>
+
+            {/* Divider Line */}
+            <div className="border-t border-border/20 my-4"></div>
+
+            {/* Stats Row */}
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground font-semibold">BMI</p>
+                <p className="text-lg font-extrabold text-primary">25.8</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground font-semibold">Progress</p>
+                <p className="text-lg font-extrabold text-primary">68%</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground font-semibold">Days Left</p>
+                <p className="text-lg font-extrabold text-primary">45</p>
+              </div>
+            </div>
+
+            {/* Action Button */}
+            <div className="flex justify-center">
+              <Button 
+                onClick={() => setShowWeightInput(!showWeightInput)} 
+                size="lg" 
+                className="rounded-xl gradient-primary text-primary-foreground border-0 shadow-button font-bold w-full"
+              >
+                {showWeightInput ? (
+                  <div className="flex items-center gap-2">
+                    <Input 
+                      type="number" 
+                      value={weight} 
+                      onChange={(e) => setWeight(e.target.value)} 
+                      placeholder={activeSpecialty === 'obesity' ? "kg" : activeSpecialty === 'diabetes' ? "mg/dL" : "mIU/L"} 
+                      className="w-24 h-10 text-sm rounded-lg bg-secondary border-border text-foreground" 
+                    />
+                    <Button onClick={() => setShowWeightInput(false)} size="sm" className="rounded-lg gradient-primary text-primary-foreground border-0 text-xs h-10">✓</Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">📝</span>
+                    <span>Log {activeSpecialty === 'obesity' ? 'Weight' : activeSpecialty === 'diabetes' ? 'Glucose' : 'TSH'}</span>
+                  </div>
+                )}
+              </Button>
             </div>
           </div>
         </div>
@@ -204,40 +265,8 @@ const PaidDashboard = () => {
           ))}
         </div>
 
-        {/* Upcoming Webinar */}
-        <h2 className="font-extrabold text-foreground mb-3">🎥 Upcoming Webinar</h2>
-        <div className="card-glossy rounded-2xl p-4 mb-4">
-          <div className="flex gap-3">
-            <img src={webinarThumb} alt="Webinar" className="w-20 h-16 rounded-xl object-cover" />
-            <div className="flex-1">
-              <p className="text-sm font-bold text-foreground">Thyroid Health & Hormone Balance</p>
-              <p className="text-xs text-muted-foreground">Dr. Bhagesh Kulkarni • Tomorrow, 6 PM</p>
-              <div className="flex items-center gap-1 mt-1">
-                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-semibold">Live</span>
-                <span className="text-xs text-muted-foreground">45 min</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Progress summary */}
-        <button onClick={() => navigate("/progress")} className="w-full card-glossy rounded-2xl p-4 mb-4 text-left">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-xl">📊</span>
-            <h3 className="font-bold text-foreground">Progress Summary</h3>
-          </div>
-          <div className="grid grid-cols-3 gap-3">
-            {specialtyData.progressStats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-lg mb-0.5">{s.emoji}</p>
-                <p className="text-base font-extrabold text-foreground">{s.value}</p>
-                <p className="text-[10px] text-muted-foreground font-semibold">{s.label}</p>
-                <p className="text-[10px] text-primary font-bold">{s.change}</p>
-              </div>
-            ))}
-          </div>
-        </button>
-
+        
+        
         {/* Upcoming Webinars */}
         <div className="mb-4">
           <div className="flex items-center justify-between mb-3">
