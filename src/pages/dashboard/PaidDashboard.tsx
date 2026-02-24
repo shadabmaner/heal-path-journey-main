@@ -285,6 +285,28 @@ const PaidDashboard = () => {
           </div>
         </div>
 
+        {/* Pharmacy Payments */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-extrabold text-foreground">🏥 Pharmacy Payments</h2>
+            <button onClick={() => navigate("/pharmacy-payments")} className="text-xs text-primary font-bold">View All</button>
+          </div>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-4 bg-warning/5 border border-warning/20 rounded-xl">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Pending Payment</p>
+                <p className="text-xs text-muted-foreground">Metformin 500mg • 30 days</p>
+              </div>
+              <div className="text-right">
+                <p className="text-lg font-extrabold text-warning">₹450</p>
+                <Button size="sm" onClick={() => navigate("/pharmacy-payment")} className="mt-1 rounded-xl bg-warning text-warning-foreground text-xs h-8 font-bold border-0">
+                  Pay Now
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Payment alert */}
         <div className="rounded-2xl p-4 flex items-center gap-3 card-glossy">
           <span className="text-2xl">💳</span>

@@ -191,7 +191,7 @@ const ProgressDashboard = () => {
             <h3 className="font-bold text-foreground text-sm">{activeSpecialty === 'obesity' ? 'Milestones' : 'Milestones'}</h3>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            {activeSpecialty === 'obesity' ? [
+            {(activeSpecialty === 'obesity' ? [
               { label: "First Week", icon: "🏅", unlocked: true },
               { label: "5 Day Streak", icon: "🔥", unlocked: true },
               { label: "10 kg Total Loss", icon: "⚡", unlocked: true },
@@ -203,7 +203,7 @@ const ProgressDashboard = () => {
               { label: "First Week", icon: "🏅", unlocked: true },
               { label: "5 Day Streak", icon: "🔥", unlocked: true },
               { label: "TSH Optimized", icon: "🎯", unlocked: true },
-            ].map((m) => (
+            ]).map((m) => (
               <div key={m.label} className={`flex-1 text-center p-3 rounded-xl ${m.unlocked ? "bg-primary/10 border border-primary/20" : "bg-muted"}`}>
                 <span className="text-2xl mb-1">{m.icon}</span>
                 <p className="text-sm font-bold text-foreground">{m.label}</p>

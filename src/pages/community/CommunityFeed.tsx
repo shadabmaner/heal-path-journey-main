@@ -18,6 +18,11 @@ const posts = [
 const CommunityFeed = () => {
   const navigate = useNavigate();
   const [liked, setLiked] = useState<Set<number>>(new Set());
+  const [showMyPosts, setShowMyPosts] = useState(false);
+
+  const myPosts = posts.filter(post => post.user === "Priya M."); // Assuming current user is Priya M.
+
+  const displayPosts = showMyPosts ? myPosts : posts;
 
   const toggleLike = (id: number) => {
     const next = new Set(liked);
@@ -38,6 +43,21 @@ const CommunityFeed = () => {
           </button>
         </div>
 
+        <div className="flex bg-card rounded-2xl p-1 shadow-card mb-4">
+          <button 
+            onClick={() => setShowMyPosts(false)} 
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all ${!showMyPosts ? "gradient-primary text-primary-foreground shadow-button" : "text-muted-foreground"}`}
+          >
+            📝 All Posts
+          </button>
+          <button 
+            onClick={() => setShowMyPosts(true)} 
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all ${showMyPosts ? "gradient-primary text-primary-foreground shadow-button" : "text-muted-foreground"}`}
+          >
+            👤 My Posts
+          </button>
+        </div>
+
         <div className="card-glossy rounded-2xl p-4 mb-4">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-primary-foreground text-xs font-bold">RP</div>
@@ -51,7 +71,7 @@ const CommunityFeed = () => {
         </div>
 
         <div className="space-y-4">
-          {posts.map((post) => (
+          {displayPosts.map((post) => (
             <div key={post.id} className="card-glossy rounded-2xl overflow-hidden">
               <div className="flex items-center gap-3 px-4 pt-4 pb-2">
                 {post.avatar ? (
